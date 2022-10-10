@@ -5,7 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".MainActivity">
+    tools:context=".MainActivity"
+    tools:ignore="UseSwitchCompatOrMaterialXml">
 
     <EditText
         android:id="@+id/cost_of_service"
@@ -78,6 +79,5 @@
         android:layout_height="wrap_content"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/calculate_button"
-        android:text="Tip Amount" />
-
+        tools:text="Tip amount: 10$" />
 </androidx.constraintlayout.widget.ConstraintLayout>

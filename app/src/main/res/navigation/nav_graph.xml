@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph.xml"
+    android:label="Pub form"
+    app:startDestination="@id/pubFormFragment">
+
+    <fragment
+        android:id="@+id/pubFormFragment"
+        android:name="com.example.mobv.PubFormFragment"
+        android:label="Pub form"
+        tools:layout="@layout/fragment_pub_form">
+        <action
+            android:id="@+id/action_pubFormFragment_to_pubInfoFragment"
+            app:destination="@id/pubInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pubInfoFragment"
+        android:name="com.example.mobv.PubInfoFragment"
+        android:label="Info about pub" >
+        <argument
+            android:name="ownerName"
+            app:argType="string" />
+        <argument
+            android:name="pubName"
+            app:argType="string" />
+        <argument
+            android:name="latitude"
+            app:argType="float" />
+        <argument
+            android:name="longitude"
+            app:argType="float" />
+    </fragment>
+</navigation>

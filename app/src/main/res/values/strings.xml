@@ -1,4 +1,10 @@
 <resources>
-    <string name="app_name">Z1</string>
-    <string name="button">Press me</string>
+    <string name="app_name">MOBV Project</string>
+    <string name="show_on_map">Show on map</string>
+    <string name="confirm">Confirm</string>
+    <string name="enter_pub_info">Enter info about pub</string>
+    <string name="owner_name">Owner\'s name</string>
+    <string name="pub_name">Pub name</string>
+    <string name="latitude">Latitude</string>
+    <string name="longitude">Longitude</string>
 </resources>

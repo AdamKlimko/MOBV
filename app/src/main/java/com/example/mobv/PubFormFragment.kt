@@ -22,15 +22,8 @@ class PubFormFragment : Fragment() {
     ): View {
         _binding = FragmentPubFormBinding.inflate(inflater, container, false)
 
-        binding.confirmButton.setOnClickListener {
-            val action = PubFormFragmentDirections.actionPubFormFragmentToPubInfoFragment(
-                ownerName = binding.ownerNameEditText.text.toString(),
-                pubName = binding.pubNameEditText.text.toString(),
-                latitude = binding.latitudeEditText.text.toString().toFloat(),
-                longitude = binding.longitudeEditText.text.toString().toFloat()
-            )
-            view?.findNavController()?.navigate(action)
-        }
+        binding.confirmButton.setOnClickListener { onConfirm() }
+        binding.listButton.setOnClickListener { onShowList() }
 
         return binding.root
     }
@@ -38,5 +31,20 @@ class PubFormFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun onShowList() {
+        val action = PubFormFragmentDirections.actionPubFormFragmentToPubListFragment()
+        view?.findNavController()?.navigate(action)
+    }
+
+    private fun onConfirm() {
+        val action = PubFormFragmentDirections.actionPubFormFragmentToPubInfoFragment(
+            ownerName = binding.ownerNameEditText.text.toString(),
+            pubName = binding.pubNameEditText.text.toString(),
+            latitude = binding.latitudeEditText.text.toString().toFloat(),
+            longitude = binding.longitudeEditText.text.toString().toFloat()
+        )
+        view?.findNavController()?.navigate(action)
     }
 }

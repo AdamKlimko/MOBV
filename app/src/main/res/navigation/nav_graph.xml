@@ -12,6 +12,9 @@
         android:label="Pub form"
         tools:layout="@layout/fragment_pub_form">
         <action
+            android:id="@+id/action_pubFormFragment_to_pubListFragment"
+            app:destination="@id/pubListFragment" />
+        <action
             android:id="@+id/action_pubFormFragment_to_pubInfoFragment"
             app:destination="@id/pubInfoFragment" />
     </fragment>
@@ -31,5 +34,26 @@
         <argument
             android:name="longitude"
             app:argType="float" />
+    </fragment>
+    <fragment
+        android:id="@+id/pubListFragment"
+        android:name="com.example.mobv.PubListFragment"
+        android:label="Pub list"
+        tools:layout="@layout/fragment_pub_list" >
+        <action
+            android:id="@+id/action_pubListFragment_to_pubDetailFragment"
+            app:destination="@id/pubDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/pubDetailFragment"
+        android:name="com.example.mobv.PubDetailFragment"
+        android:label="Pub detail"
+        tools:layout="@layout/fragment_pub_detail">
+        <argument
+            android:name="pub"
+            app:argType="com.example.mobv.model.Pub" />
+        <argument
+            android:name="position"
+            app:argType="integer" />
     </fragment>
 </navigation>

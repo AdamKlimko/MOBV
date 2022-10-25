@@ -55,5 +55,8 @@
         <argument
             android:name="position"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_pubDetailFragment_to_pubListFragment"
+            app:destination="@id/pubListFragment" />
     </fragment>
 </navigation>

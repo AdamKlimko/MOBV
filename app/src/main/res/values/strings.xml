@@ -9,4 +9,6 @@
     <string name="latitude">Latitude</string>
     <string name="longitude">Longitude</string>
     <string name="delete_btn">Delete</string>
+    <string name="amenity">Amenity</string>
+    <string name="opening_hours">Opening hours</string>
 </resources>

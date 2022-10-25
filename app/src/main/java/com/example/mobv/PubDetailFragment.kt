@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.navigation.findNavController
 import com.example.mobv.databinding.FragmentPubDetailBinding
 import com.example.mobv.model.Pub
 
@@ -21,6 +22,7 @@ class PubDetailFragment : Fragment() {
 
         arguments?.let {
             pub = it.getParcelable<Pub>("pub")
+            pubPosition = it.getInt("position")
         }
     }
 
@@ -37,11 +39,13 @@ class PubDetailFragment : Fragment() {
 
     fun initDetail() {
         binding.pubNameTextView.text = pub?.tags?.name.toString()
-//        binding.ownerNameTextView.text = pub?.tags?.
+        binding.amenity.text = pub?.tags?.amenity.toString().uppercase()
+        binding.openingHours.text = pub?.tags?.opening_hours.toString()
     }
 
     fun onDelete() {
-
+        val action = PubDetailFragmentDirections.actionPubDetailFragmentToPubListFragment()
+        view?.findNavController()?.navigate(action)
     }
 
     override fun onDestroyView() {

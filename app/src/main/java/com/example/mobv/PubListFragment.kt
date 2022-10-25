@@ -11,15 +11,22 @@ import com.example.mobv.databinding.FragmentPubListBinding
 import com.example.mobv.model.Pub
 
 class PubListFragment : Fragment() {
+    private var deletePosition: Int = 0
+    private var isDelete: Boolean = false
     private lateinit var pubs: ArrayList<Pub>
     private var _binding: FragmentPubListBinding? = null
     private val binding get() = _binding!!
     private lateinit var recyclerView: RecyclerView
-//    private var Menu menu
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setHasOptionsMenu(true)
+
+        arguments?.let {
+            deletePosition = it.getInt("position")
+            isDelete = it.getBoolean("isDelete")
+        }
     }
 
     override fun onCreateView(
@@ -33,7 +40,10 @@ class PubListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         recyclerView = binding.list
         with(recyclerView) {
+
             pubs = PubDatasource(context).loadPubs()
+            if (isDelete)
+                pubs.removeAt(deletePosition)
             recyclerView.layoutManager = LinearLayoutManager(context)
             recyclerView.adapter = MyPubRecyclerViewAdapter(pubs)
         }
@@ -51,13 +61,13 @@ class PubListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         when(item.itemId) {
             R.id.menuAtoZ -> {
-                pubs.sortBy { it.tags?.name.toString() }
+                pubs.sortWith( compareBy {it.tags?.name.toString().lowercase()} )
                 recyclerView?.adapter?.notifyDataSetChanged()
                 Toast.makeText(context, "Sort A to Z", Toast.LENGTH_SHORT).show()
                 return true
             }
             R.id.menuZtoA -> {
-                pubs.sortByDescending { it.tags?.name.toString() }
+                pubs.sortWith( compareByDescending {it.tags?.name.toString().lowercase()} )
                 recyclerView?.adapter?.notifyDataSetChanged()
                 Toast.makeText(context, "Sort Z to A", Toast.LENGTH_SHORT).show()
                 return true

@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.example.mobv.databinding.FragmentPubFormBinding
@@ -39,12 +40,24 @@ class PubFormFragment : Fragment() {
     }
 
     private fun onConfirm() {
-        val action = PubFormFragmentDirections.actionPubFormFragmentToPubInfoFragment(
-            ownerName = binding.ownerNameEditText.text.toString(),
-            pubName = binding.pubNameEditText.text.toString(),
-            latitude = binding.latitudeEditText.text.toString().toFloat(),
-            longitude = binding.longitudeEditText.text.toString().toFloat()
-        )
-        view?.findNavController()?.navigate(action)
+        if (textInputsNotEmpty()) {
+            val action = PubFormFragmentDirections.actionPubFormFragmentToPubInfoFragment(
+                ownerName = binding.ownerNameEditText.text.toString(),
+                pubName = binding.pubNameEditText.text.toString(),
+                latitude = binding.latitudeEditText.text.toString().toFloat(),
+                longitude = binding.longitudeEditText.text.toString().toFloat()
+            )
+            view?.findNavController()?.navigate(action)
+        }
+        else {
+            Toast.makeText(context, "Fill in all the fields!", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun textInputsNotEmpty(): Boolean {
+        return binding.ownerNameEditText.text.isNotEmpty() &&
+                binding.pubNameEditText.text.isNotEmpty() &&
+                binding.latitudeEditText.text.isNotEmpty() &&
+                binding.longitudeEditText.text.isNotEmpty()
     }
 }

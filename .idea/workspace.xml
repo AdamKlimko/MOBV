@@ -9,7 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="0ad7fc84-b82b-437c-a5dc-42a88609485c" name="Changes" comment="feat: retrofit scalar builder">
+    <list default="true" id="0ad7fc84-b82b-437c-a5dc-42a88609485c" name="Changes" comment="feat: mars photos app done">
       <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/marsphotos/BindingAdapters.kt" afterDir="false" />
       <change afterPath="$PROJECT_DIR$/app/src/main/java/com/example/android/marsphotos/overview/PhotoGridAdapter.kt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.0.2/executionHistory/executionHistory.bin" afterDir="false" />
@@ -190,7 +190,14 @@
       <option name="project" value="LOCAL" />
       <updated>1667422873995</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="feat: mars photos app done">
+      <created>1667482992001</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1667482992001</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -221,6 +228,7 @@
     <MESSAGE value="feat: live data, observables" />
     <MESSAGE value="feat: data binding" />
     <MESSAGE value="feat: retrofit scalar builder" />
-    <option name="LAST_COMMIT_MESSAGE" value="feat: retrofit scalar builder" />
+    <MESSAGE value="feat: mars photos app done" />
+    <option name="LAST_COMMIT_MESSAGE" value="feat: mars photos app done" />
   </component>
 </project>

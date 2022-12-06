@@ -39,7 +39,7 @@ class BarsAdapter(val events: BarsEvents? = null) :
 
         fun bind(item: BarItem, events: BarsEvents?) {
             itemView.findViewById<TextView>(R.id.name).text = item.name
-            itemView.findViewById<TextView>(R.id.count).text = item.users.toString()
+            itemView.findViewById<TextView>(R.id.count).text = item.visitors.toString()
             itemView.findViewById<Chip>(R.id.type).text = item.type
 
             itemView.setOnClickListener { events?.onBarClick(item) }

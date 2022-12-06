@@ -10,11 +10,11 @@ class BarItem (
     val type: String,
     val lat: Double,
     val lon: Double,
-    var users: Int
+    var visitors: Int
 ){
 
     override fun toString(): String {
-        return "BarItem(id='$id', name='$name', type='$type', lat=$lat, lon=$lon, users=$users)"
+        return "BarItem(id='$id', name='$name', type='$type', lat=$lat, lon=$lon, users=$visitors)"
     }
 
     override fun equals(other: Any?): Boolean {
@@ -26,7 +26,7 @@ class BarItem (
         if (type != other.type) return false
         if (lat != other.lat) return false
         if (lon != other.lon) return false
-        if (users != other.users) return false
+        if (visitors != other.visitors) return false
 
         return true
     }
@@ -37,7 +37,7 @@ class BarItem (
         result = 31 * result + type.hashCode()
         result = 31 * result + lat.hashCode()
         result = 31 * result + lon.hashCode()
-        result = 31 * result + users
+        result = 31 * result + visitors
         return result
     }
 }

@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import com.example.zadanie.data.api.*
 import com.example.zadanie.data.db.LocalCache
 import com.example.zadanie.data.db.model.BarItem
+import com.example.zadanie.helpers.Sort
 import com.example.zadanie.ui.viewmodels.data.MyLocation
 import com.example.zadanie.ui.viewmodels.data.NearbyBar
 import java.io.IOException
@@ -201,8 +202,8 @@ class DataRepository private constructor(
         return nearby
     }
 
-    fun dbBars() : LiveData<List<BarItem>?> {
-        return cache.getBars()
+    fun dbBars(sort: Sort) : LiveData<List<BarItem>?> {
+        return cache.getBars(sort)
     }
 
     companion object{

@@ -6,11 +6,18 @@
     <string name="login_failed">"Login failed"</string>
     <string name="action_sign_up">Sign up </string>
     <string name="login_sign_up">"Sign up failed"</string>
-    <string name="or_log_in">or log in</string>
-    <string name="or_create_account">or create account.</string>
+    <string name="or_log_in">Or log in</string>
+    <string name="or_create_account">Or create account.</string>
     <string name="bars">Bars</string>
     <string name="log_out">Log out</string>
-    <string name="repeat_password">repeat password</string>
-    <string name="back">back</string>
-    <string name="zobrazit_na_mape">Zobrazit na mape</string>
+    <string name="repeat_password">Repeat password</string>
+    <string name="back">Back</string>
+    <string name="zobrazit_na_mape">View in google maps</string>
+    <string name="bar_ist">Bar list</string>
+    <string name="friends">Friends</string>
+    <string name="my_location">My location</string>
+    <string name="sort">Sort</string>
+    <string name="a_to_z">A -> Z</string>
+    <string name="z_to_a">Z -> A</string>
+    <string name="n_of_visitors">N. of visitors</string>
 </resources>

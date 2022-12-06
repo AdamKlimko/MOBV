@@ -19,6 +19,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.example.zadanie.GeofenceBroadcastReceiver
 import com.example.zadanie.R
 import com.example.zadanie.databinding.FragmentLocateBinding
@@ -107,6 +108,21 @@ class LocateFragment : Fragment() {
                     viewmodel.myBar.postValue(nearbyBar)
                 }
 
+            }
+
+            bnd.bottomNavigation.selectedItemId = R.id.page_locate
+            bnd.bottomNavigation.setOnItemSelectedListener {
+                when(it.itemId) {
+                    R.id.page_bars -> {
+                        this.findNavController().navigate(R.id.action_to_bars)
+                        true
+                    }
+                    R.id.page_friends -> {
+                        //
+                        true
+                    }
+                    else -> false
+                }
             }
         }
         viewmodel.loading.observe(viewLifecycleOwner) {

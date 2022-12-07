@@ -14,6 +14,7 @@
     <string name="back">Back</string>
     <string name="zobrazit_na_mape">View in google maps</string>
     <string name="bar_ist">Bar list</string>
+    <string name="bar_detail">Bar detail</string>
     <string name="friends">Friends</string>
     <string name="my_location">My location</string>
     <string name="sort">Sort</string>

@@ -244,12 +244,13 @@ class DataRepository private constructor(
 
     suspend fun apiAddFriend(
         name: String,
-        onError: (error: String) -> Unit
+        onError: (error: String) -> Unit,
+        onSuccess: (message: String) -> Unit
     ) {
         try {
             val resp = service.addFriend(AddFriendRequest(contact = name))
             if (resp.isSuccessful) {
-                //
+                onSuccess("Friend added successfully")
             } else {
                 onError("Add friend failed, try again later.")
             }

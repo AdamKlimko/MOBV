@@ -35,7 +35,9 @@ class FriendsViewModel (private val repository: DataRepository): ViewModel() {
 
     fun addFriend(name: String) {
         viewModelScope.launch {
-            repository.apiAddFriend(name) { _message.postValue(Evento(it)) }
+            repository.apiAddFriend(
+                name, { _message.postValue(Evento(it)) }, { _message.postValue(Evento(it)) }
+            )
         }
     }
 }

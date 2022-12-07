@@ -15,6 +15,8 @@ class LocateViewModel(private val repository: DataRepository): ViewModel() {
 
     val loading = MutableLiveData(false)
 
+    val user = liveData { emitSource(repository.dbUser()) }
+
     val myLocation = MutableLiveData<MyLocation>(null)
     val myBar= MutableLiveData<NearbyBar>(null)
 

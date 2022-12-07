@@ -20,6 +20,7 @@
     <string name="a_to_z">A -> Z</string>
     <string name="z_to_a">Z -> A</string>
     <string name="n_of_visitors">N. of visitors</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="add_friend">Add friend</string>
+    <string name="friend_name">Friend\'s name</string>
+    <string name="signed_in">Signed in: %1$s</string>
 </resources>

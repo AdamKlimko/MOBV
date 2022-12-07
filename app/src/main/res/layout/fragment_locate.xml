@@ -20,7 +20,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/ic_baseline_location_on_32"
-            app:title="@string/my_location"/>
+            app:title="@string/my_location"
+            app:subtitle="@{@string/signed_in(model.user.name)}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"

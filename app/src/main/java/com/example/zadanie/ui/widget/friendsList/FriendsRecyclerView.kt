@@ -3,12 +3,17 @@ package com.example.zadanie.ui.widget.friendsList
 import android.content.Context
 import android.util.AttributeSet
 import androidx.databinding.BindingAdapter
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zadanie.data.db.model.BarItem
 import com.example.zadanie.data.db.model.FriendItem
-import com.example.zadanie.ui.widget.barlist.BarsAdapter
-import com.example.zadanie.ui.widget.barlist.BarsRecyclerView
+import com.example.zadanie.ui.fragments.BarsFragmentDirections
+import com.example.zadanie.ui.fragments.FriendsFragmentDirections
+
+interface FriendsEvents {
+    fun onFriendClick(friend: FriendItem)
+}
 
 class FriendsRecyclerView : RecyclerView {
     private lateinit var friendsAdapter: FriendsAdapter
@@ -24,7 +29,13 @@ class FriendsRecyclerView : RecyclerView {
     private fun init(context: Context) {
         setHasFixedSize(true)
         layoutManager = LinearLayoutManager(context, VERTICAL, false)
-        friendsAdapter = FriendsAdapter()
+        friendsAdapter = FriendsAdapter(object : FriendsEvents {
+            override fun onFriendClick(friend: FriendItem) {
+                this@FriendsRecyclerView.findNavController().navigate(
+                    FriendsFragmentDirections.actionToDetail(friend.user_id)
+                )
+            }
+        })
         adapter = friendsAdapter
     }
 }

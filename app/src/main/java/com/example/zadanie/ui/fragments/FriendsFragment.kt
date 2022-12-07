@@ -16,6 +16,7 @@ import com.example.zadanie.R
 import com.example.zadanie.databinding.FragmentBarsBinding
 import com.example.zadanie.databinding.FragmentFriendsBinding
 import com.example.zadanie.helpers.Injection
+import com.example.zadanie.helpers.Permissions
 import com.example.zadanie.helpers.PreferenceData
 import com.example.zadanie.ui.viewmodels.BarsViewModel
 import com.example.zadanie.ui.viewmodels.FriendsViewModel
@@ -31,15 +32,12 @@ class FriendsFragment : Fragment() {
         when {
             permissions.getOrDefault(Manifest.permission.ACCESS_FINE_LOCATION, false) -> {
                 Navigation.findNavController(requireView()).navigate(R.id.action_to_locate)
-                // Precise location access granted.
             }
             permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-//                viewmodel.show("Only approximate location access granted.")
-                // Only approximate location access granted.
+                viewmodel.show("Only approximate location access granted.")
             }
             else -> {
-//                viewmodel.show("Location access denied.")
-                // No location access granted.
+                viewmodel.show("Location access denied.")
             }
         }
     }
@@ -72,7 +70,7 @@ class FriendsFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-//            model = viewmodel
+            model = viewmodel
         }.also { bnd ->
             bnd.topAppBar.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -97,7 +95,7 @@ class FriendsFragment : Fragment() {
                         true
                     }
                     R.id.page_locate -> {
-                        if (checkPermissions()) {
+                        if (Permissions.checkPermissions(requireContext())) {
                             this.findNavController().navigate(R.id.action_to_locate)
                         } else {
                             locationPermissionRequest.launch(
@@ -112,6 +110,8 @@ class FriendsFragment : Fragment() {
                     else -> false
                 }
             }
+
+            bnd.addFriendButton.setOnClickListener { this.findNavController().navigate(R.id.action_to_add_friend) }
         }
 
         viewmodel.loading.observe(viewLifecycleOwner) {
@@ -123,16 +123,5 @@ class FriendsFragment : Fragment() {
                 Navigation.findNavController(requireView()).navigate(R.id.action_to_login)
             }
         }
-    }
-
-    // TODO to helper func
-    private fun checkPermissions(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
     }
 }

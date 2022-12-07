@@ -2,9 +2,9 @@ package com.example.zadanie.ui.viewmodels
 
 import androidx.lifecycle.*
 import com.example.zadanie.data.DataRepository
-import com.example.zadanie.data.db.model.BarItem
 import com.example.zadanie.data.db.model.FriendItem
 import com.example.zadanie.helpers.Evento
+import kotlinx.coroutines.launch
 
 
 class FriendsViewModel (private val repository: DataRepository): ViewModel() {
@@ -14,21 +14,28 @@ class FriendsViewModel (private val repository: DataRepository): ViewModel() {
 
     val loading = MutableLiveData(false)
 
+    val user = liveData { emitSource(repository.dbUser()) }
+
     val friends: LiveData<List<FriendItem>?> = liveData {
-//            loading.postValue(true)
-//            repository.apiBarList { _message.postValue(Evento(it)) }
-//            loading.postValue(false)
-//            emitSource(repository.dbBars())
-//        }
+            loading.postValue(true)
+            repository.apiFriendsList { _message.postValue(Evento(it)) }
+            loading.postValue(false)
+            emitSource(repository.dbFriends())
     }
 
     fun refreshData(){
-//        viewModelScope.launch {
-//            loading.postValue(true)
-//            repository.apiBarList { _message.postValue(Evento(it)) }
-//            loading.postValue(false)
-//        }
+        viewModelScope.launch {
+            loading.postValue(true)
+            repository.apiFriendsList { _message.postValue(Evento(it)) }
+            loading.postValue(false)
+        }
     }
 
     fun show(msg: String){ _message.postValue(Evento(msg))}
+
+    fun addFriend(name: String) {
+        viewModelScope.launch {
+            repository.apiAddFriend(name) { _message.postValue(Evento(it)) }
+        }
+    }
 }

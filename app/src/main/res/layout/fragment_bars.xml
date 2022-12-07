@@ -21,7 +21,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/ic_baseline_liquor_32"
-            app:title="@string/bar_ist" />
+            app:title="@string/bar_ist"
+            app:subtitle="@{@string/signed_in(model.user.name)}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"

@@ -5,6 +5,8 @@ import androidx.lifecycle.LiveData
 import com.example.zadanie.data.api.*
 import com.example.zadanie.data.db.LocalCache
 import com.example.zadanie.data.db.model.BarItem
+import com.example.zadanie.data.db.model.FriendItem
+import com.example.zadanie.data.db.model.UserItem
 import com.example.zadanie.helpers.Sort
 import com.example.zadanie.ui.viewmodels.data.MyLocation
 import com.example.zadanie.ui.viewmodels.data.NearbyBar
@@ -16,7 +18,7 @@ class DataRepository private constructor(
     private val service: RestApi,
     private val cache: LocalCache
 ){
-
+    // API USER
     suspend fun apiUserCreate(
         name: String,
         password: String,
@@ -64,6 +66,8 @@ class DataRepository private constructor(
                         onError("Wrong name or password.")
                     }else {
                         onStatus(user)
+                        cache.deleteUser()
+                        cache.insertUser(UserItem(user.uid, name))
                     }
                 }
             } else {
@@ -81,6 +85,7 @@ class DataRepository private constructor(
         }
     }
 
+    // API BARS
     suspend fun apiBarCheckin(
         bar: NearbyBar,
         onError: (error: String) -> Unit,
@@ -202,8 +207,74 @@ class DataRepository private constructor(
         return nearby
     }
 
+    // API FRIENDS
+    suspend fun apiFriendsList(
+        onError: (error: String) -> Unit
+    ) {
+        try {
+            val resp = service.friendsList()
+            if (resp.isSuccessful) {
+                resp.body()?.let { friends ->
+
+                    val f = friends.map {
+                        FriendItem(
+                            it.user_id,
+                            it.user_name,
+                            it.bar_id,
+                            it.bar_name,
+                            it.time,
+                            it.bar_lat,
+                            it.bar_lon,
+                        )
+                    }
+                    cache.deleteFriends()
+                    cache.insertFriends(f)
+                } ?: onError("Failed to load friends")
+            } else {
+                onError("Failed to read friends")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Failed to load friends, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Failed to load friends, error.")
+        }
+    }
+
+    suspend fun apiAddFriend(
+        name: String,
+        onError: (error: String) -> Unit
+    ) {
+        try {
+            val resp = service.addFriend(AddFriendRequest(contact = name))
+            if (resp.isSuccessful) {
+                //
+            } else {
+                onError("Add friend failed, try again later.")
+            }
+        } catch (ex: IOException) {
+            ex.printStackTrace()
+            onError("Add friend failed, check internet connection")
+        } catch (ex: Exception) {
+            ex.printStackTrace()
+            onError("Add friend failed, error.")
+        }
+    }
+
+    // DB BARS
     fun dbBars(sort: Sort) : LiveData<List<BarItem>?> {
         return cache.getBars(sort)
+    }
+
+    // DB FRIENDS
+    fun dbFriends() : LiveData<List<FriendItem>?> {
+        return cache.getFriends()
+    }
+
+    // DB USER
+    fun dbUser() : LiveData<UserItem> {
+        return cache.getUser()
     }
 
     companion object{

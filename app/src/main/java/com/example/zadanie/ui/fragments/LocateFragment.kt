@@ -24,6 +24,7 @@ import com.example.zadanie.GeofenceBroadcastReceiver
 import com.example.zadanie.R
 import com.example.zadanie.databinding.FragmentLocateBinding
 import com.example.zadanie.helpers.Injection
+import com.example.zadanie.helpers.Permissions
 import com.example.zadanie.helpers.PreferenceData
 import com.example.zadanie.ui.viewmodels.LocateViewModel
 import com.example.zadanie.ui.viewmodels.data.MyLocation
@@ -42,11 +43,9 @@ class LocateFragment : Fragment() {
     ) { permissions ->
         when {
             permissions.getOrDefault(Manifest.permission.ACCESS_BACKGROUND_LOCATION, false) -> {
-                // Precise location access granted.
             }
             else -> {
                 viewmodel.show("Background location access denied.")
-                // No location access granted.
             }
         }
     }
@@ -173,7 +172,7 @@ class LocateFragment : Fragment() {
         val geofenceIntent = PendingIntent.getBroadcast(
             requireContext(), 0,
             Intent(requireContext(), GeofenceBroadcastReceiver::class.java),
-            PendingIntent.FLAG_UPDATE_CURRENT
+            PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
         )
 
         val request = GeofencingRequest.Builder().apply {
@@ -236,12 +235,6 @@ class LocateFragment : Fragment() {
     }
 
     private fun checkPermissions(): Boolean {
-        return ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
+        return Permissions.checkPermissions(requireContext())
     }
 }

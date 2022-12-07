@@ -8,25 +8,24 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.zadanie.R
 import com.example.zadanie.data.db.model.FriendItem
 import com.example.zadanie.helpers.autoNotify
-import com.example.zadanie.ui.widget.barlist.BarsEvents
 import kotlin.properties.Delegates
 
-class FriendsAdapter(val events: BarsEvents? = null) :
+class FriendsAdapter(val events: FriendsEvents? = null) :
     RecyclerView.Adapter<FriendsAdapter.FriendItemViewHolder>() {
     var items: List<FriendItem> by Delegates.observable(emptyList()) { _, old, new ->
-        autoNotify(old, new) { o, n -> o.id.compareTo(n.id) == 0 }
+        autoNotify(old, new) { o, n -> o.user_id.compareTo(n.user_id) == 0 }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendsAdapter.FriendItemViewHolder {
-        return FriendsAdapter.FriendItemViewHolder(parent)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FriendItemViewHolder {
+        return FriendItemViewHolder(parent)
     }
 
     override fun getItemCount(): Int {
         return items.size
     }
 
-    override fun onBindViewHolder(holder: FriendsAdapter.FriendItemViewHolder, position: Int) {
-        holder.bind(items[position])
+    override fun onBindViewHolder(holder: FriendItemViewHolder, position: Int) {
+        holder.bind(items[position], events)
     }
 
     class FriendItemViewHolder(
@@ -37,8 +36,10 @@ class FriendsAdapter(val events: BarsEvents? = null) :
             false)
     ) : RecyclerView.ViewHolder(itemView){
 
-        fun bind(item: FriendItem) {
-            itemView.findViewById<TextView>(R.id.name).text = item.name
+        fun bind(item: FriendItem, events: FriendsEvents?) {
+            itemView.findViewById<TextView>(R.id.name).text = item.user_name
+            itemView.findViewById<TextView>(R.id.bar).text = item.bar_name
+            itemView.setOnClickListener { events?.onFriendClick(item) }
         }
     }
 }

@@ -3,6 +3,7 @@ package com.example.zadanie.ui.viewmodels
 import androidx.lifecycle.*
 import com.example.zadanie.data.DataRepository
 import com.example.zadanie.data.db.model.BarItem
+import com.example.zadanie.data.db.model.UserItem
 import com.example.zadanie.helpers.Evento
 import com.example.zadanie.helpers.Sort
 import kotlinx.coroutines.launch
@@ -13,6 +14,8 @@ class BarsViewModel(private val repository: DataRepository): ViewModel() {
         get() = _message
 
     val loading = MutableLiveData(false)
+
+    val user = liveData { emitSource(repository.dbUser()) }
 
 //    val bars: LiveData<List<BarItem>?> =
 //        liveData {

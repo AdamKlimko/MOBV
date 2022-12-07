@@ -21,7 +21,8 @@
             app:layout_constraintTop_toTopOf="parent"
             app:menu="@menu/top_app_bar"
             app:navigationIcon="@drawable/ic_baseline_groups_32"
-            app:title="@string/friends"/>
+            app:title="@string/friends"
+            app:subtitle="@{@string/signed_in(model.user.name)}"/>
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/container"
@@ -43,7 +44,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
-
                 <com.example.zadanie.ui.widget.friendsList.FriendsRecyclerView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -56,6 +56,17 @@
             </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+            android:id="@+id/addFriendButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:layout_margin="16dp"
+            android:text="@string/add_friend"
+            app:icon="@drawable/ic_baseline_person_add_24"
+            app:layout_constraintBottom_toBottomOf="@+id/container"
+            app:layout_constraintEnd_toEndOf="parent" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"

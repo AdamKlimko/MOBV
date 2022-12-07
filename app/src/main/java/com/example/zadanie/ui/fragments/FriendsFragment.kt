@@ -3,35 +3,28 @@ package com.example.zadanie.ui.fragments
 import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Bundle
+import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
-import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.MenuRes
 import androidx.core.app.ActivityCompat
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.zadanie.R
 import com.example.zadanie.databinding.FragmentBarsBinding
+import com.example.zadanie.databinding.FragmentFriendsBinding
 import com.example.zadanie.helpers.Injection
 import com.example.zadanie.helpers.PreferenceData
-import com.example.zadanie.helpers.Sort
 import com.example.zadanie.ui.viewmodels.BarsViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarItemView
-import com.google.android.material.navigation.NavigationBarView
+import com.example.zadanie.ui.viewmodels.FriendsViewModel
 
-class BarsFragment : Fragment() {
-    private lateinit var binding: FragmentBarsBinding
-    private lateinit var viewmodel: BarsViewModel
 
-    // TODO helper
+class FriendsFragment : Fragment() {
+    private lateinit var binding: FragmentFriendsBinding
+    private lateinit var viewmodel: FriendsViewModel
+
     private val locationPermissionRequest = registerForActivityResult(
         ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
@@ -41,11 +34,11 @@ class BarsFragment : Fragment() {
                 // Precise location access granted.
             }
             permissions.getOrDefault(Manifest.permission.ACCESS_COARSE_LOCATION, false) -> {
-                viewmodel.show("Only approximate location access granted.")
+//                viewmodel.show("Only approximate location access granted.")
                 // Only approximate location access granted.
             }
             else -> {
-                viewmodel.show("Location access denied.")
+//                viewmodel.show("Location access denied.")
                 // No location access granted.
             }
         }
@@ -56,16 +49,15 @@ class BarsFragment : Fragment() {
 
         viewmodel = ViewModelProvider(this,
             Injection.provideViewModelFactory(requireContext())
-        )[BarsViewModel::class.java]
+        )[FriendsViewModel::class.java]
     }
-
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentBarsBinding.inflate(inflater, container, false)
+        binding = FragmentFriendsBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -80,7 +72,7 @@ class BarsFragment : Fragment() {
 
         binding.apply {
             lifecycleOwner = viewLifecycleOwner
-            model = viewmodel
+//            model = viewmodel
         }.also { bnd ->
             bnd.topAppBar.setOnMenuItemClickListener {
                 when (it.itemId) {
@@ -97,11 +89,11 @@ class BarsFragment : Fragment() {
                 viewmodel.refreshData()
             }
 
-            bnd.bottomNavigation.selectedItemId = R.id.page_bars
+            bnd.bottomNavigation.selectedItemId = R.id.page_friends
             bnd.bottomNavigation.setOnItemSelectedListener {
                 when(it.itemId) {
-                    R.id.page_friends -> {
-                        this.findNavController().navigate(R.id.action_to_friends)
+                    R.id.page_bars -> {
+                        this.findNavController().navigate(R.id.action_to_bars)
                         true
                     }
                     R.id.page_locate -> {
@@ -120,8 +112,6 @@ class BarsFragment : Fragment() {
                     else -> false
                 }
             }
-
-            bnd.sortButton.setOnClickListener { showSortMenu(it, R.menu.sort_menu) }
         }
 
         viewmodel.loading.observe(viewLifecycleOwner) {
@@ -135,6 +125,7 @@ class BarsFragment : Fragment() {
         }
     }
 
+    // TODO to helper func
     private fun checkPermissions(): Boolean {
         return ActivityCompat.checkSelfPermission(
             requireContext(),
@@ -143,29 +134,5 @@ class BarsFragment : Fragment() {
             requireContext(),
             Manifest.permission.ACCESS_COARSE_LOCATION
         ) == PackageManager.PERMISSION_GRANTED
-    }
-
-    private fun showSortMenu(v: View, @MenuRes menuRes: Int) {
-        val popup = PopupMenu(requireContext(), v)
-        popup.menuInflater.inflate(menuRes, popup.menu)
-
-        popup.setOnMenuItemClickListener { menuItem: MenuItem ->
-            when(menuItem.itemId) {
-                R.id.menuAtoZ -> {
-                    viewmodel.setSortingMethod(Sort.NAME_ASC)
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.menuZtoA -> {
-                    viewmodel.setSortingMethod(Sort.NAME_DESC)
-                    return@setOnMenuItemClickListener true
-                }
-                R.id.menuVisitors -> {
-                    viewmodel.setSortingMethod(Sort.VISITORS)
-                    return@setOnMenuItemClickListener true
-                }
-                else -> { return@setOnMenuItemClickListener false }
-            }
-        }
-        popup.show()
     }
 }

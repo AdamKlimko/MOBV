@@ -87,9 +87,6 @@ class LocateFragment : Fragment() {
             lifecycleOwner = viewLifecycleOwner
             model = viewmodel
         }.also { bnd ->
-            bnd.back.setOnClickListener {
-                it.findNavController().popBackStack()
-            }
             bnd.swiperefresh.setOnRefreshListener {
                 loadData()
             }
@@ -118,7 +115,7 @@ class LocateFragment : Fragment() {
                         true
                     }
                     R.id.page_friends -> {
-                        //
+                        this.findNavController().navigate(R.id.action_to_friends)
                         true
                     }
                     else -> false

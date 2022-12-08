@@ -61,4 +61,9 @@
     <color name="md_theme_dark_surfaceTint">#B4C4FF</color>
     <color name="md_theme_dark_outlineVariant">#45464F</color>
     <color name="md_theme_dark_scrim">#000000</color>
+    <color name="color_fast_food">#DFCD5A</color>
+    <color name="color_bar">#DC6674</color>
+    <color name="color_pub">#4372C1</color>
+    <color name="color_cafe">#956146</color>
+    <color name="color_restaurant">#B13B33</color>
 </resources>

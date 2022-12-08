@@ -4,7 +4,7 @@
         android:id="@+id/page_bars"
         android:enabled="true"
         android:icon="@drawable/ic_baseline_liquor_24"
-        android:title="@string/bar_ist"/>
+        android:title="@string/bars"/>
     <item
         android:id="@+id/page_friends"
         android:enabled="true"

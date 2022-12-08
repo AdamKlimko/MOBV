@@ -1,5 +1,6 @@
 package com.example.zadanie.ui.widget.barlist
 
+import android.content.res.ColorStateList
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import androidx.core.content.res.ResourcesCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zadanie.R
 import com.example.zadanie.data.db.model.BarItem
+import com.example.zadanie.helpers.ChipStyleUtil
 import com.example.zadanie.helpers.autoNotify
 import com.google.android.material.chip.Chip
 import kotlin.coroutines.coroutineContext
@@ -42,24 +44,11 @@ class BarsAdapter(val events: BarsEvents? = null) :
         fun bind(item: BarItem, events: BarsEvents?) {
             itemView.findViewById<TextView>(R.id.name).text = item.name
             itemView.findViewById<TextView>(R.id.count).text = item.visitors.toString()
-            itemView.findViewById<Chip>(R.id.type).text = getTypeTextString(item.type)
-            itemView.findViewById<Chip>(R.id.type).chipIcon = ResourcesCompat.getDrawable(
-                itemView.context.resources ,
-                R.drawable.ic_baseline_check_24, null
-            )
-
+            val chipStyle = ChipStyleUtil.getChipStyle(itemView.context, item.type)
+            itemView.findViewById<Chip>(R.id.type).text = chipStyle.text
+            itemView.findViewById<Chip>(R.id.type).chipIcon = chipStyle.iconDrawable
+            itemView.findViewById<Chip>(R.id.type).chipBackgroundColor = chipStyle.backgroundColor
             itemView.setOnClickListener { events?.onBarClick(item) }
-        }
-
-        fun getTypeTextString(type: String): String {
-            return when(type) {
-                "fast_food" -> "Fast food"
-                "cafe" -> "Cafe"
-                "restaurant" -> "Restaurant"
-                "bar" -> "Bar"
-                "pub" -> "Pub"
-                else -> {return "Bar"}
-            }
         }
     }
 }

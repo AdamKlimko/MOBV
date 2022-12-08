@@ -3,9 +3,9 @@ package com.example.zadanie.ui.viewmodels
 import androidx.lifecycle.*
 import com.example.zadanie.data.DataRepository
 import com.example.zadanie.data.db.model.BarItem
-import com.example.zadanie.data.db.model.UserItem
 import com.example.zadanie.helpers.Evento
 import com.example.zadanie.helpers.Sort
+import com.example.zadanie.helpers.SortMethod
 import kotlinx.coroutines.launch
 
 class BarsViewModel(private val repository: DataRepository): ViewModel() {
@@ -17,26 +17,21 @@ class BarsViewModel(private val repository: DataRepository): ViewModel() {
 
     val user = liveData { emitSource(repository.dbUser()) }
 
-//    val bars: LiveData<List<BarItem>?> =
-//        liveData {
-//            loading.postValue(true)
-//            repository.apiBarList { _message.postValue(Evento(it)) }
-//            loading.postValue(false)
-//            emitSource(repository.dbBars())
-//        }
+    private val _sortingSwitchAsc = MutableLiveData(false)
+    val sortSwitchAsc: LiveData<Boolean>
+        get() = _sortingSwitchAsc
 
-    private val _sortingMethod: MutableLiveData<Sort> = MutableLiveData(Sort.VISITORS)
+    private val _sort: MutableLiveData<Sort> = MutableLiveData(
+        Sort(SortMethod.VISITORS, false)
+    )
 
-    val bars: LiveData<List<BarItem>?> = Transformations.switchMap(_sortingMethod) {
+    val bars: LiveData<List<BarItem>?> = Transformations.switchMap(_sort) {
         liveData {
             loading.postValue(true)
             repository.apiBarList { _message.postValue(Evento(it)) }
             loading.postValue(false)
-            when (_sortingMethod.value) {
-                Sort.NAME_ASC -> { emitSource(repository.dbBars(Sort.NAME_ASC)) }
-                Sort.NAME_DESC -> { emitSource(repository.dbBars(Sort.NAME_DESC)) }
-                Sort.VISITORS -> { emitSource(repository.dbBars(Sort.VISITORS)) }
-                else -> {}
+            _sort.value?.let {
+                emitSource(repository.dbBars(it))
             }
         }
     }
@@ -51,7 +46,14 @@ class BarsViewModel(private val repository: DataRepository): ViewModel() {
 
     fun show(msg: String){ _message.postValue(Evento(msg))}
 
-    fun setSortingMethod(sort: Sort) {
-        _sortingMethod.value = sort
+    fun setSortingDirection(asc: Boolean) {
+        _sortingSwitchAsc.value = asc
+        val sortMethod = _sort.value?.sortMethod
+        _sort.value = sortMethod?.let { Sort(it, asc) }
+    }
+
+    fun setSortingMethod(sort: SortMethod) {
+        val asc = _sort.value?.asc
+        _sort.value = asc?.let { Sort(sort, it) }
     }
 }

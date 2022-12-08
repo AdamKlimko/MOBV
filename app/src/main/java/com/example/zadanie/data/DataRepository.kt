@@ -8,6 +8,7 @@ import com.example.zadanie.data.db.model.BarItem
 import com.example.zadanie.data.db.model.FriendItem
 import com.example.zadanie.data.db.model.UserItem
 import com.example.zadanie.helpers.Sort
+import com.example.zadanie.helpers.SortMethod
 import com.example.zadanie.ui.viewmodels.data.MyLocation
 import com.example.zadanie.ui.viewmodels.data.NearbyBar
 import java.io.IOException

@@ -1,32 +1,25 @@
 package com.example.zadanie.ui.fragments
 
 import android.Manifest
-import android.content.pm.PackageManager
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.PopupMenu
-import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.MenuRes
-import androidx.core.app.ActivityCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.zadanie.R
 import com.example.zadanie.databinding.FragmentBarsBinding
 import com.example.zadanie.helpers.Injection
 import com.example.zadanie.helpers.Permissions
 import com.example.zadanie.helpers.PreferenceData
-import com.example.zadanie.helpers.Sort
+import com.example.zadanie.helpers.SortMethod
 import com.example.zadanie.ui.viewmodels.BarsViewModel
-import com.google.android.material.bottomnavigation.BottomNavigationView
-import com.google.android.material.navigation.NavigationBarItemView
-import com.google.android.material.navigation.NavigationBarView
 
 class BarsFragment : Fragment() {
     private lateinit var binding: FragmentBarsBinding
@@ -119,6 +112,11 @@ class BarsFragment : Fragment() {
             }
 
             bnd.sortButton.setOnClickListener { showSortMenu(it, R.menu.sort_menu) }
+
+            bnd.sortDirection.isChecked = false
+            bnd.sortDirection.setOnCheckedChangeListener { buttonView, isChecked ->
+                viewmodel.setSortingDirection(isChecked)
+            }
         }
 
         viewmodel.loading.observe(viewLifecycleOwner) {
@@ -138,16 +136,16 @@ class BarsFragment : Fragment() {
 
         popup.setOnMenuItemClickListener { menuItem: MenuItem ->
             when(menuItem.itemId) {
-                R.id.menuAtoZ -> {
-                    viewmodel.setSortingMethod(Sort.NAME_ASC)
+                R.id.menuName -> {
+                    viewmodel.setSortingMethod(SortMethod.NAME)
                     return@setOnMenuItemClickListener true
                 }
-                R.id.menuZtoA -> {
-                    viewmodel.setSortingMethod(Sort.NAME_DESC)
+                R.id.menuDistance -> {
+                    viewmodel.setSortingMethod(SortMethod.DISTANCE)
                     return@setOnMenuItemClickListener true
                 }
                 R.id.menuVisitors -> {
-                    viewmodel.setSortingMethod(Sort.VISITORS)
+                    viewmodel.setSortingMethod(SortMethod.VISITORS)
                     return@setOnMenuItemClickListener true
                 }
                 else -> { return@setOnMenuItemClickListener false }

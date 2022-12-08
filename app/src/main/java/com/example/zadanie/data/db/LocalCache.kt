@@ -5,6 +5,7 @@ import com.example.zadanie.data.db.model.BarItem
 import com.example.zadanie.data.db.model.FriendItem
 import com.example.zadanie.data.db.model.UserItem
 import com.example.zadanie.helpers.Sort
+import com.example.zadanie.helpers.SortMethod
 
 class LocalCache(private val dao: DbDao) {
     // BARS
@@ -15,10 +16,18 @@ class LocalCache(private val dao: DbDao) {
     suspend fun deleteBars(){ dao.deleteBars() }
 
     fun getBars(sort: Sort): LiveData<List<BarItem>?> {
-        return when (sort) {
-            Sort.NAME_ASC -> { dao.getBarsSortAsc() }
-            Sort.NAME_DESC -> { dao.getBarsSortDesc() }
-            Sort.VISITORS -> { dao.getBarsSortVisitors() }
+        return if (sort.asc) {
+            when (sort.sortMethod) {
+                SortMethod.NAME -> { dao.getBarsNameAsc() }
+                SortMethod.DISTANCE -> { dao.getBarsVisitorsAsc() }
+                SortMethod.VISITORS -> { dao.getBarsDistanceAsc() }
+            }
+        } else {
+            when (sort.sortMethod) {
+                SortMethod.NAME -> { dao.getBarsNameDesc() }
+                SortMethod.DISTANCE -> { dao.getBarsVisitorsDesc() }
+                SortMethod.VISITORS -> { dao.getBarsDistanceDesc() }
+            }
         }
     }
 

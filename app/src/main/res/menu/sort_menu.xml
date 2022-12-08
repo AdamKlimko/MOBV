@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:id="@+id/menuAtoZ"
-        android:title="@string/a_to_z"/>
-    <item android:id="@+id/menuZtoA"
-        android:title="@string/z_to_a"/>
+    <item android:id="@+id/menuName"
+        android:title="@string/name"/>
+    <item android:id="@+id/menuDistance"
+        android:title="@string/distance"/>
     <item android:id="@+id/menuVisitors"
         android:title="@string/n_of_visitors"/>
 </menu>

@@ -22,13 +22,22 @@ interface DbDao {
     fun getBars(): LiveData<List<BarItem>?>
 
     @Query("SELECT * FROM bars order by name ASC")
-    fun getBarsSortAsc(): LiveData<List<BarItem>?>
+    fun getBarsNameAsc(): LiveData<List<BarItem>?>
 
     @Query("SELECT * FROM bars order by name DESC")
-    fun getBarsSortDesc(): LiveData<List<BarItem>?>
+    fun getBarsNameDesc(): LiveData<List<BarItem>?>
+
+    @Query("SELECT * FROM bars order by visitors ASC")
+    fun getBarsVisitorsAsc(): LiveData<List<BarItem>?>
 
     @Query("SELECT * FROM bars order by visitors DESC")
-    fun getBarsSortVisitors(): LiveData<List<BarItem>?>
+    fun getBarsVisitorsDesc(): LiveData<List<BarItem>?>
+
+    @Query("SELECT * FROM bars order by visitors ASC")
+    fun getBarsDistanceAsc(): LiveData<List<BarItem>?>
+
+    @Query("SELECT * FROM bars order by visitors DESC")
+    fun getBarsDistanceDesc(): LiveData<List<BarItem>?>
 
     // FRIENDS
     @Insert(onConflict = OnConflictStrategy.REPLACE)

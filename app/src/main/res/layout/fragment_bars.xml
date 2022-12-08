@@ -65,17 +65,26 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <com.google.android.material.switchmaterial.SwitchMaterial
+            android:id="@+id/sortDirection"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="@{model.sortSwitchAsc ? @string/asc : @string/desc}"
+            app:layout_constraintEnd_toStartOf="@+id/sortButton"
+            app:layout_constraintTop_toBottomOf="@+id/topAppBar" />
+
         <Button
             android:id="@+id/sortButton"
             style="@style/Widget.MaterialComponents.Button.OutlinedButton.Icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="24dp"
             android:backgroundTint="@color/cardview_light_background"
             android:text="@string/sort"
-            android:layout_marginEnd="24dp"
             app:icon="@drawable/ic_baseline_sort_24"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/topAppBar"/>
+            app:layout_constraintTop_toBottomOf="@+id/topAppBar" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"

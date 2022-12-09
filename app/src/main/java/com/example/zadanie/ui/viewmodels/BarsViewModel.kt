@@ -24,6 +24,8 @@ class BarsViewModel(private val repository: DataRepository): ViewModel() {
     private val _sort: MutableLiveData<Sort> = MutableLiveData(
         Sort(SortMethod.VISITORS, false)
     )
+    val sort: LiveData<Sort>
+        get() = _sort
 
     val bars: LiveData<List<BarItem>?> = Transformations.switchMap(_sort) {
         liveData {

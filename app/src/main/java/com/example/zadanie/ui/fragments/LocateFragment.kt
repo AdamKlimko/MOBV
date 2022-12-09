@@ -1,6 +1,7 @@
 package com.example.zadanie.ui.fragments
 
 import android.Manifest
+import android.animation.Animator
 import android.annotation.SuppressLint
 import android.app.PendingIntent
 import android.content.DialogInterface
@@ -10,15 +11,16 @@ import android.os.Build
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
+import android.view.View.*
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.app.ActivityCompat
+import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.zadanie.GeofenceBroadcastReceiver
 import com.example.zadanie.R
@@ -90,15 +92,29 @@ class LocateFragment : Fragment() {
                 loadData()
             }
 
-            bnd.checkme.setOnClickListener {
-                if (checkBackgroundPermissions()) {
-                    viewmodel.checkMe()
-                } else {
-                    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
-                        permissionDialog()
+            bnd.checkmeBtn.setOnClickListener {
+                val lottieAnimation = bnd.checkMeAnim
+                viewmodel.setAnimation(true)
+                lottieAnimation.playAnimation()
+                lottieAnimation.addAnimatorListener(object: Animator.AnimatorListener {
+                    override fun onAnimationStart(animation: Animator) {}
+
+                    override fun onAnimationEnd(animation: Animator) {
+                        if (checkBackgroundPermissions()) {
+                            viewmodel.checkMe()
+                        } else {
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                                permissionDialog()
+                            }
+                        }
+                        viewmodel.setAnimation(false)
                     }
-                }
+
+                    override fun onAnimationCancel(animation: Animator) {}
+                    override fun onAnimationRepeat(animation: Animator) {}
+                })
             }
+
             bnd.nearbyBars.events = object : NearbyBarsEvents {
                 override fun onBarClick(nearbyBar: NearbyBar) {
                     viewmodel.myBar.postValue(nearbyBar)

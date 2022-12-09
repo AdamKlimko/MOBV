@@ -3,6 +3,7 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <data>
+        <import type="android.view.View"/>
         <variable
             name="model"
             type="com.example.zadanie.ui.viewmodels.LocateViewModel" />
@@ -66,17 +67,30 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="@{model.myBar.type}"
+                        android:textAllCaps="true"
                         app:layout_constraintStart_toStartOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/name" />
 
                     <com.google.android.material.button.MaterialButton
-                        android:id="@+id/checkme"
+                        android:id="@+id/checkme_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:enabled="@{model.myBar!=null}"
-                        android:text="I'm here"
+                        android:text="@string/im_here"
+                        android:visibility="@{model.animation ? View.INVISIBLE : View.VISIBLE}"
                         app:layout_constraintEnd_toEndOf="parent"
                         app:layout_constraintTop_toBottomOf="@id/name" />
+
+                    <com.airbnb.lottie.LottieAnimationView
+                        android:id="@+id/check_me_anim"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:visibility="@{model.animation ? View.VISIBLE : View.INVISIBLE}"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/name"
+                        app:lottie_autoPlay="false"
+                        app:lottie_loop="false"
+                        app:lottie_rawRes="@raw/beers" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
 

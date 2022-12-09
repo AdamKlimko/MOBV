@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.zadanie.R
+import com.example.zadanie.helpers.ChipStyleUtil
 import com.example.zadanie.helpers.autoNotify
 import com.example.zadanie.ui.viewmodels.data.NearbyBar
 import com.google.android.material.chip.Chip
@@ -38,9 +39,13 @@ class NearbyBarsAdapter(val events: NearbyBarsEvents? = null) :
         ) : RecyclerView.ViewHolder(itemView){
 
         fun bind(item: NearbyBar, events: NearbyBarsEvents? = null) {
+            val chipStyle = ChipStyleUtil.getChipStyle(itemView.context, item.type)
+
             itemView.findViewById<TextView>(R.id.name).text = item.name
             itemView.findViewById<TextView>(R.id.distance).text = "%.2f m".format(item.distance)
-            itemView.findViewById<Chip>(R.id.type).text = item.type
+            itemView.findViewById<Chip>(R.id.type).text = chipStyle.text
+            itemView.findViewById<Chip>(R.id.type).chipIcon = chipStyle.iconDrawable
+            itemView.findViewById<Chip>(R.id.type).chipBackgroundColor = chipStyle.backgroundColor
 
             itemView.setOnClickListener { events?.onBarClick(item) }
         }

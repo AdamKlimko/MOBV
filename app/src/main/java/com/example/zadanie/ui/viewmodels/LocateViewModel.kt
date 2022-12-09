@@ -20,6 +20,8 @@ class LocateViewModel(private val repository: DataRepository): ViewModel() {
     val myLocation = MutableLiveData<MyLocation>(null)
     val myBar= MutableLiveData<NearbyBar>(null)
 
+    val animation = MutableLiveData<Boolean>(false)
+
     private val _checkedIn = MutableLiveData<Evento<Boolean>>()
     val checkedIn: LiveData<Evento<Boolean>>
         get() = _checkedIn
@@ -50,6 +52,10 @@ class LocateViewModel(private val repository: DataRepository): ViewModel() {
             }
             loading.postValue(false)
         }
+    }
+
+    fun setAnimation(boolean: Boolean) {
+        animation.value = boolean
     }
 
     fun show(msg: String){ _message.postValue(Evento(msg))}
